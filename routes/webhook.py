@@ -5,10 +5,20 @@ from services.whatsapp import handle_incoming_message
 webhook_bp = Blueprint("webhook", __name__)
 
 
+@webhook_bp.route("", methods=["POST"])
 @webhook_bp.route("/", methods=["POST"])
 def whatsapp_webhook():
     incoming_msg = request.values.get("Body", "").strip()
     sender = request.values.get("From", "")
+
+    print(f"Received message from {sender}: {incoming_msg}")
+    if not incoming_msg:
+        return "No message received", 400
+    if not sender:
+        return "No sender information", 400
+    # Process the incoming message
+
+    print(f"Processing message: {incoming_msg}")
 
     response_text = handle_incoming_message(incoming_msg, sender)
 
@@ -16,4 +26,4 @@ def whatsapp_webhook():
     msg = resp.message()
     msg.body(response_text)
 
-    return str(resp)
+    return str(resp), 200
