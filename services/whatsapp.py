@@ -6,6 +6,7 @@ client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
 def handle_incoming_message(message: str, sender: str) -> str:
     msg = message.lower()
+    print(f"Processing message: {msg} from {sender}")  # Log adicional para depuración
 
     if "hola" in msg:
         return "¡Hola! Soy tu asistente virtual 🤖. Puedes decir 'cita' para agendar."
