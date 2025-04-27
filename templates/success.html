@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autorización Exitosa</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f2f2f2;
+            padding-top: 50px;
+        }
+
+        .card {
+            background: white;
+            display: inline-block;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        p {
+            margin-top: 10px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h1>✅ ¡Cuenta Conectada!</h1>
+        <p>Gracias, {{ name }}.<br>Tu calendario ahora está sincronizado correctamente.</p>
+        <p>Ya puedes cerrar esta ventana.</p>
+    </div>
+    <script>
+        setTimeout(function () {
+            window.close();
+        }, 5000);
+    </script>
+</body>
+
+</html>
