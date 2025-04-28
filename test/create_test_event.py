@@ -53,7 +53,7 @@ def crear_evento_de_prueba():
         "location": "Online",
         "description": "Este es un evento de prueba creado automáticamente por el bot.",
         "start": {
-            "dateTime": (now + datetime.timedelta(minutes=10)).isoformat() + "Z",
+            "dateTime": (now + datetime.timedelta(minutes=32)).isoformat() + "Z",
             "timeZone": "UTC",
         },
         "end": {
@@ -65,6 +65,7 @@ def crear_evento_de_prueba():
     created_event = service.events().insert(calendarId="primary", body=event).execute()
 
     print(f"✅ Evento creado: {created_event.get('htmlLink')}")
+    return True
 
 
 if __name__ == "__main__":

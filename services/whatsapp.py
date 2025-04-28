@@ -1,5 +1,6 @@
 from twilio.rest import Client
 from config import TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_PHONE_NUMBER
+from test.create_test_event import crear_evento_de_prueba
 
 client = Client(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN)
 
@@ -9,7 +10,12 @@ def handle_incoming_message(message: str, sender: str) -> str:
     print(f"Processing message: {msg} from {sender}")  # Log adicional para depuración
 
     if "hola" in msg:
-        return "¡Hola! Soy tu asistente virtual 🤖. Puedes decir 'cita' para agendar."
+        # Crear un evento de prueba cuando el mensaje sea "hola"
+        evento_creado = crear_evento_de_prueba()
+        if evento_creado:
+            return "¡Hola! Soy tu asistente virtual 🤖. He creado un evento de prueba en tu calendario."
+        else:
+            return "¡Hola! Soy tu asistente virtual 🤖. Ocurrió un error al crear el evento."
     elif "cita" in msg:
         return "Por favor indícame la fecha y hora de tu cita (ej. 26 abril 5pm)."
     else:
