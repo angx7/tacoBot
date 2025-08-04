@@ -34,8 +34,8 @@ def get_horas_disponibles(doctor_email, fecha_ddmmaaaa):
     fecha_str = fecha.strftime("%Y-%m-%d")
 
     # Paso 3: definir el rango del día completo
-    time_min = f"{fecha_str}T00:00:00"
-    time_max = f"{fecha_str}T23:59:59"
+    time_min = f"{fecha_str}T00:00:00Z"
+    time_max = f"{fecha_str}T23:59:59Z"
 
     # Paso 4: consultar eventos ocupados
     response = (
@@ -138,3 +138,47 @@ def crear_evento_en_calendar(doctor_email, paciente_nombre, fecha_ddmmaaaa, hora
     except Exception as e:
         print("❌ Error al crear el evento:", e)
         return False
+
+
+def buscar_cita_en_calendar(doctor_email, nombre_paciente):
+    from database.mongo_client import doctores_collection
+    from utils.encryption import decrypt
+
+    doctor = doctores_collection.find_one({"email": doctor_email})
+    if not doctor:
+        return None
+
+    creds = google.oauth2.credentials.Credentials(
+        token=decrypt(doctor["access_token"]),
+        refresh_token=decrypt(doctor["refresh_token"]),
+        token_uri=doctor["token_uri"],
+        client_id=decrypt(doctor["client_id"]),
+        client_secret=decrypt(doctor["client_secret"]),
+        scopes=doctor["scopes"],
+    )
+
+    service = googleapiclient.discovery.build("calendar", "v3", credentials=creds)
+
+    now = datetime.utcnow().isoformat() + "Z"
+    try:
+        events_result = (
+            service.events()
+            .list(
+                calendarId="primary",
+                timeMin=now,
+                maxResults=15,
+                singleEvents=True,
+                orderBy="startTime",
+            )
+            .execute()
+        )
+        events = events_result.get("items", [])
+
+        for event in events:
+            if nombre_paciente.lower() in event.get("summary", "").lower():
+                dt_inicio = datetime.fromisoformat(event["start"]["dateTime"])
+                return dt_inicio.strftime("%d/%m/%Y"), dt_inicio.strftime("%H:%M")
+    except Exception as e:
+        print("❌ Error al buscar cita:", e)
+
+    return None
