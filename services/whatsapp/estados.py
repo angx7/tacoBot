@@ -1,0 +1,12 @@
+class EstadoConversacion:
+    INICIO = "inicio"
+    MENU_PRINCIPAL = "menu_principal"
+    SELECCION_DOCTOR = "seleccion_doctor"
+    ESPERANDO_NOMBRE_PACIENTE = "esperando_nombre_paciente"
+    ESPERANDO_FECHA = "esperando_fecha"
+    ESPERANDO_HORA = "esperando_hora"
+    CONSULTAR_NOMBRE = "consultar_nombre"
+    CONFIRMAR_FECHA_NODISPONIBLE = "fecha_no_disponible"
+    CONFIRMAR_HORA_NODISPONIBLE = "hora_no_disponible"
+    FINALIZADO = "finalizado"
+    CANCELADO = "cancelado"

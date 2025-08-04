@@ -9,6 +9,9 @@ GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET")
 GOOGLE_REDIRECT_URI = os.getenv("GOOGLE_REDIRECT_URI")
 
+print(f"👉 REDIRECT_URI ACTUAL: {GOOGLE_REDIRECT_URI}")
+
+
 SCOPES = [
     "openid",
     "https://www.googleapis.com/auth/userinfo.email",

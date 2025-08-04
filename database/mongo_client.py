@@ -7,10 +7,16 @@ from dotenv import load_dotenv
 load_dotenv()
 
 MONGODB_URI = os.getenv("MONGODB_URI")
+if not MONGODB_URI:
+    raise ValueError("❌ MONGODB_URI no definido en el archivo .env")
 
 client = MongoClient(MONGODB_URI)
-db = client["tacobot"]  # nombre de la base de datos, puedes cambiarlo
+db = client["tacobot"]  # o el nombre que hayas configurado en MongoDB
 
-# Aquí podemos definir las colecciones:
+# Colección: Doctores
 doctores_collection = db["doctores"]
 doctores_collection.create_index("email", unique=True)
+
+# Colección: Conversaciones
+conversaciones_collection = db["conversaciones"]
+conversaciones_collection.create_index("numero", unique=True)
