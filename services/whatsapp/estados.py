@@ -10,5 +10,5 @@ class EstadoConversacion:
     CONFIRMAR_HORA_NODISPONIBLE = "hora_no_disponible"
     FINALIZADO = "finalizado"
     CANCELADO = "cancelado"
-    CONSULTA_SELECCION_DOCTOR = "consulta_seleccion_doctor"
-    CONSULTA_ESPERANDO_NOMBRE = "consulta_esperando_nombre"
+    # CONSULTA_SELECCION_DOCTOR = "consulta_seleccion_doctor"
+    # CONSULTA_ESPERANDO_NOMBRE = "consulta_esperando_nombre"

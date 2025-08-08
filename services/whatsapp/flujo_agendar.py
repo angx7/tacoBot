@@ -6,11 +6,7 @@ from services.whatsapp.helpers import (
     es_hora_valida,
     es_fecha_habil,
 )
-from services.calendar import (
-    get_horas_disponibles,
-    crear_evento_en_calendar,
-    buscar_cita_en_calendar,
-)
+from services.calendar import get_horas_disponibles, crear_evento_en_calendar
 from datetime import datetime, timezone, timedelta
 
 TIEMPO_EXPIRACION = timedelta(minutes=30)
@@ -131,31 +127,6 @@ def procesar_agendamiento(msg, numero):
 
     # -------------------- Finalizado --------------------
     if estado == Estado.FINALIZADO:
-        if msg in ["reiniciar", "nueva", "nueva cita", "otra cita"]:
-            conversaciones_collection.update_one(
-                {"numero": numero},
-                {
-                    "$set": {
-                        "estado": Estado.SELECCION_DOCTOR,
-                        "last_updated": ahora,
-                    },
-                    "$unset": {
-                        "nombre": "",
-                        "fecha": "",
-                        "hora": "",
-                        "doctor": "",
-                        "doctor_email": "",
-                    },
-                },
-            )
-            return mensaje_bienvenida()
-
-        # Mostrar los datos de la última cita agendada
-        return mensaje_confirmacion(
-            nombre=conversacion.get("nombre", "Paciente"),
-            fecha=conversacion.get("fecha", "¿?"),
-            hora=conversacion.get("hora", "¿?"),
-            doctor=conversacion.get("doctor", "¿?"),
-        )
+        return mensaje_reiniciar()
 
     return mensaje_formato_invalido()
